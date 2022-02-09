@@ -5,7 +5,6 @@ import terminalio
 import time
 import adafruit_imageload
 from adafruit_display_text import label
-#from adafruit_magtag.magtag import MagTag
 from secrets import secrets
 from WiFiManager import WiFiManager
 
@@ -18,11 +17,15 @@ DAYS = ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sun
 MONTHS = ("January","February","March","April","May","June","July","August","September","October","November","December")
 icons_large_bmp, icons_large_pal = adafruit_imageload.load(ICONS_LARGE_FILE)
 icons_small_bmp, icons_small_pal = adafruit_imageload.load(ICONS_SMALL_FILE)
-#magtag = MagTag()
 display = board.DISPLAY
 wm = WiFiManager()
 
-#magtag.graphics.set_background(BACKGROUND_BMP)
+if (not alarm.wake_alarm is None and alarm.wake_alarm is alarm.pin.PinAlarm):
+    print("PinAlarm value:")
+    print(alarm.wake_alarm)
+    print(alarm.wake_alarm.value)
+    print(alarm.sleep_memory)
+
 background = displayio.OnDiskBitmap(BACKGROUND_BMP)
 group = displayio.Group()
 bg_sprite = displayio.TileGrid(
