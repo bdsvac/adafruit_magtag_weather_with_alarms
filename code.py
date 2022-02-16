@@ -26,6 +26,24 @@ if (not alarm.wake_alarm is None and alarm.wake_alarm is alarm.pin.PinAlarm):
     print(alarm.wake_alarm.value)
     print(alarm.sleep_memory)
 
+def BlackOutScreen():    
+    clearScreenBitmap = displayio.Bitmap(display.width, display.height, 1)
+    clearScreenGroup = displayio.Group()
+    clearScreenPalette = displayio.Palette(1)
+    clearScreenPalette[0] = 0x000000
+    clearScreenSprite = displayio.TileGrid(
+        clearScreenBitmap,
+        pixel_shader=clearScreenPalette,
+        x=0,
+        y=0,
+    )
+    clearScreenGroup.append(clearScreenSprite)
+    time.sleep(display.time_to_refresh + 1)
+    display.show(clearScreenGroup)
+    display.refresh()
+    time.sleep(display.time_to_refresh + 1)
+
+BlackOutScreen()
 background = displayio.OnDiskBitmap(BACKGROUND_BMP)
 group = displayio.Group()
 bg_sprite = displayio.TileGrid(
@@ -83,9 +101,9 @@ def go_to_sleep(current_time):
     )
     alarms = []
     print("setting alarms")
-    alarms.append(alarm.time.TimeAlarm(monotonic_time=time.monotonic() + seconds_to_sleep))
+    #alarms.append(alarm.time.TimeAlarm(monotonic_time=time.monotonic() + seconds_to_sleep))
     alarms.append(alarm.pin.PinAlarm(pin=board.BUTTON_A, value=0, pull=True))
-    #alarms.append(alarm.pin.PinAlarm(pin=board.BUTTON_B, value=0, pull=True))
+    alarms.append(alarm.pin.PinAlarm(pin=board.BUTTON_B, value=0, pull=True))
     #alarms.append(alarm.pin.PinAlarm(pin=board.BUTTON_C, value=0, pull=True))
     #alarms.append(alarm.pin.PinAlarm(pin=board.BUTTON_D, value=0, pull=True))
     print("sleeping")
